@@ -20,8 +20,5 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 
 - NextJS
 - TypeScript
+- React Icons
 - Strapi
-
-## Configuration
-
-- Module aliases configuration for easier import.

@@ -1,3 +1,5 @@
+/* This is the common Layout component which is used on all of the page */
+
 import styles from '@/styles/Layout.module.scss';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
@@ -33,6 +35,7 @@ const Layout = ({ title, keywords, description, children }: LayoutProps) => {
 	);
 };
 
+// We declare default props here to make it easier to read.
 Layout.defaultProps = {
 	title: 'DJ events',
 	description: 'Find the latest DJ and other musical events',
