@@ -1,8 +1,10 @@
 import styles from '@/styles/Layout.module.scss';
+import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { ReactNode } from 'react';
 import Footer from './Footer';
 import Header from './Header';
+import Hero from './Hero';
 interface LayoutProps {
 	title: string;
 	keywords?: string;
@@ -11,6 +13,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ title, keywords, description, children }: LayoutProps) => {
+	const router = useRouter();
 	return (
 		<>
 			<Head>
@@ -20,6 +23,8 @@ const Layout = ({ title, keywords, description, children }: LayoutProps) => {
 			</Head>
 
 			<Header />
+
+			{router.pathname === '/' && <Hero />}
 
 			<main className={styles.container}>{children}</main>
 
