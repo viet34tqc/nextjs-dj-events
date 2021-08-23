@@ -1,8 +1,10 @@
 import EventItem from '@/components/EventItem';
 import Layout from '@/components/Layout';
+import axiosClient from 'api/axiosClient';
 import eventApi from 'api/eventApi';
 import type { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { Event, Events } from 'type/event';
 
 interface HomeProps {
@@ -10,7 +12,7 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ events }) => {
-	return (
+		return (
 		<Layout>
 			<h1>Upcoming events</h1>
 			{events.length === 0 && <h3>No events to show</h3>}

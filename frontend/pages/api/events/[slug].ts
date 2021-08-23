@@ -9,7 +9,7 @@ export default function handler(
 	res: NextApiResponse<Data>
 ) {
 	// We name the variable 'evt' instead of 'event' to make it less confuse
-	const evt = events.filter((ev: Event) => ev.slug === req.query.slug);
+	const evt = events.find((ev: Event) => ev.slug === req.query.slug);
 
 	if (req.method === 'GET') {
 		res.status(200).json(evt);

@@ -16,6 +16,11 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
   - Create/Delete/Edit events (user only)
 - Upload image to Cloudinary
 
+## What you will learn
+
+- Routing features of NextJS
+- Data fetching using `getStaticProps` and `getStaticPaths`
+
 ## Built With
 
 - NextJS
