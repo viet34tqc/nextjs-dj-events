@@ -1,5 +1,6 @@
 import styles from '@/styles/Header.module.scss';
 import Link from 'next/link';
+import SearchForm from './SearchForm';
 
 const Header = () => {
 	return (
@@ -9,6 +10,8 @@ const Header = () => {
 					<a>DJ Events</a>
 				</Link>
 			</div>
+
+			<SearchForm />
 
 			<nav>
 				<ul>

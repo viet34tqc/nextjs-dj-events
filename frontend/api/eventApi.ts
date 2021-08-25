@@ -1,10 +1,10 @@
-import { Event, Events } from 'type/event';
+import { Events } from 'type/event';
 import axiosClient from './axiosClient';
 
 const eventApi = {
-	getAll: (params?: {}) => {
-		params = { ...params, _sort: 'date:ASC' };
-		const url = '/events';
+	getAll: (params?: {}, queryString = '') => {
+		console.log('params', params);
+		const url = `/events?${queryString}`;
 		return axiosClient.get<Events>(url, { params }).then((res) => res.data);
 	},
 

@@ -27,3 +27,4 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 - TypeScript
 - React Icons
 - Strapi
+  - qs: recommended to generate complex query string
