@@ -19,8 +19,8 @@ const Header = () => {
 						<Link href="/events">
 							<a>Events</a>
 						</Link>
-						<Link href="/about">
-							<a>About</a>
+						<Link href="/events/add">
+							<a>Add Event</a>
 						</Link>
 					</li>
 				</ul>
