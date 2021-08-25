@@ -8,7 +8,7 @@ export interface Event {
 	date: string;
 	time: string;
 	description: string;
-	image: string;
+	image: any;
 }
 
 export type Events = Event[];

@@ -3,13 +3,14 @@ import axiosClient from './axiosClient';
 
 const eventApi = {
 	getAll: (params?: {}) => {
-		const url = '/api/events';
-		return axiosClient.get<Events>(url, { params }).then(res => res.data);
+		params = { ...params, _sort: 'date:ASC' };
+		const url = '/events';
+		return axiosClient.get<Events>(url, { params }).then((res) => res.data);
 	},
 
 	get: (slug: string) => {
-		const url = `/api/events/${slug}`;
-		return axiosClient.get<Event>(url).then( res => res.data );
+		const url = `/events/?slug=${slug}`;
+		return axiosClient.get<Events>(url).then((res) => res.data[0]);
 	},
 };
 

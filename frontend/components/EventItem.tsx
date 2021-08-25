@@ -15,14 +15,16 @@ const EventItem = ({ evt }: EventItem) => {
 				<Image
 					width={170}
 					height={100}
-					src={evt.image ?? '/images/event-default.png'}
+					src={
+						evt?.image?.formats?.thumbnail?.url || '/images/event-default.png'
+					}
 					alt={evt.name}
 				/>
 			</div>
 
 			<div className={styles.info}>
 				<span>
-					{evt.date} at {evt.time}
+					{new Date(evt.date).toLocaleDateString('en-US')} at {evt.time}
 				</span>
 				<h3>{evt.name}</h3>
 			</div>

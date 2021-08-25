@@ -1,10 +1,8 @@
 import EventItem from '@/components/EventItem';
 import Layout from '@/components/Layout';
-import axiosClient from 'api/axiosClient';
 import eventApi from 'api/eventApi';
 import type { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { Event, Events } from 'type/event';
 
 interface HomeProps {
@@ -12,7 +10,7 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ events }) => {
-		return (
+	return (
 		<Layout>
 			<h1>Upcoming events</h1>
 			{events.length === 0 && <h3>No events to show</h3>}
@@ -30,10 +28,13 @@ const Home: NextPage<HomeProps> = ({ events }) => {
 };
 
 export const getStaticProps: GetStaticProps = async function () {
-	const events = await eventApi.getAll();
+	const params = {
+		_limit: 3,
+	};
+	const events = await eventApi.getAll(params);
 	return {
 		props: {
-			events: events.slice(0, 3),
+			events,
 		},
 		// There is a drawback with getStaticProps
 		// If we go to events page and add an event

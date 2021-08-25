@@ -2,8 +2,13 @@ import EventItem from '@/components/EventItem';
 import Layout from '@/components/Layout';
 import eventApi from 'api/eventApi';
 import type { GetStaticProps, NextPage } from 'next';
-import { Event } from 'type/event';
-const Home: NextPage = ({ events }: any) => {
+import { Event, Events } from 'type/event';
+
+interface EventsProps {
+	events: Events;
+}
+
+const EventsPage: NextPage<EventsProps> = ({ events }: EventsProps) => {
 	return (
 		<Layout>
 			<h1>Events</h1>
@@ -29,4 +34,4 @@ export const getStaticProps: GetStaticProps = async function () {
 	};
 };
 
-export default Home;
+export default EventsPage;

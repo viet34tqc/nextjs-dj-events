@@ -28,11 +28,18 @@ const EventPage: NextPage<EventPageProps> = ({ evt }) => {
 					</a>
 				</div>
 
-				<span>{evt.date}</span>
+				<span>
+					{new Date(evt.date).toLocaleDateString('en-US')} at {evt.time}
+				</span>
 				<h1>{evt.name}</h1>
 				{evt.image && (
 					<div className={styles.image}>
-						<Image src={evt.image} width={960} height={600} alt="" />
+						<Image
+							src={evt?.image?.formats?.medium?.url}
+							width={960}
+							height={600}
+							alt=""
+						/>
 					</div>
 				)}
 
@@ -53,12 +60,12 @@ const EventPage: NextPage<EventPageProps> = ({ evt }) => {
 	);
 };
 
-interface IParams extends ParsedUrlQuery {
+interface Params extends ParsedUrlQuery {
 	slug: string;
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-	const params = context.params as IParams;
+	const params = context.params as Params;
 	const evt = await eventApi.get(params.slug);
 	return {
 		props: {
@@ -69,7 +76,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const events = await eventApi.getAll();
-    // paths is an array of params object. This object must have `slug` property which is the name of this file.
+	// paths is an array of params object. This object must have `slug` property which is the name of this file.
 	const paths = events.map((evt) => ({
 		params: { slug: evt.slug },
 	}));
