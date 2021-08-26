@@ -6,6 +6,7 @@ import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ParsedUrlQuery } from 'querystring';
+import { MouseEvent } from 'react';
 import { FaPencilAlt, FaTimes } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,9 +24,9 @@ const EventPage: NextPage<EventPageProps> = ({ evt }) => {
 			try {
 				await eventApi.delete(evt.id);
 				toast.success('Successfully delete');
-				setTimeout( () => {
+				setTimeout(() => {
 					router.push('/events');
-				}, 5000)
+				}, 5000);
 			} catch (error) {
 				toast.error(error.message);
 			}
