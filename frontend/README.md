@@ -28,3 +28,10 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 - React Icons
 - Strapi
   - qs: recommended to generate complex query string
+  - strapi-provider-upload-cloudinary: synchronize strapi media upload with your cloudinary.
+    - Create a file named `plugins.js`
+    - Copy code from the npm page of the package
+    - Create `.env` file
+  - slugify: create strapi slugify system.
+    - Go to `api/events/models/events.js` and copy code from strapi docs for slugify systems
+- React Toastify

@@ -1,7 +1,10 @@
 import Layout from '@/components/Layout';
 import styles from '@/styles/EditForm.module.scss';
+import { useRouter } from 'next/dist/client/router';
 import { FormEvent, useState } from 'react';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import eventApi from '../../api/eventApi';
 const Add = () => {
 	const [values, setValues] = useState({
 		name: '',
@@ -13,9 +16,23 @@ const Add = () => {
 		description: '',
 	});
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const router = useRouter();
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log( values );
+
+		const hasEmptyFields = Object.values(values).some((val) => val === '');
+		if (hasEmptyFields) {
+			toast.error('Please fill in all the fields');
+		}
+
+		try {
+			const evt = await eventApi.create(values);
+			toast.success('Successfully created');
+			router.push(`/events/${evt.slug}`);
+		} catch (error) {
+			toast.error(error.message);
+		}
 	};
 
 	const handleInputChange = (
@@ -28,6 +45,7 @@ const Add = () => {
 	return (
 		<Layout title="Add new event">
 			<h1>Add event</h1>
+			<ToastContainer />
 
 			<form onSubmit={handleSubmit} className={styles.editForm}>
 				<div className={styles.grid}>

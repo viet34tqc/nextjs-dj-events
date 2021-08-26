@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import { API_URL } from '../config';
 
 const axiosClient = axios.create({
@@ -6,6 +7,7 @@ const axiosClient = axios.create({
 	headers: {
 		'content-type': 'application/json',
 	},
+	paramsSerializer: params => qs.stringify(params)
 });
 
 axiosClient.interceptors.request.use(async (config) => {
