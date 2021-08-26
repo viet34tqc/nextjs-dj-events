@@ -2,10 +2,13 @@ import Layout from '@/components/Layout';
 import styles from '@/styles/EventPage.module.scss';
 import eventApi from 'api/eventApi';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ParsedUrlQuery } from 'querystring';
 import { FaPencilAlt, FaTimes } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Event } from 'type/event';
 
 interface EventPageProps {
@@ -13,7 +16,21 @@ interface EventPageProps {
 }
 
 const EventPage: NextPage<EventPageProps> = ({ evt }) => {
-	const handleDelete = () => {};
+	const router = useRouter();
+	const handleDelete = async (e: MouseEvent) => {
+		e.preventDefault();
+		if (confirm('Are you sure?')) {
+			try {
+				await eventApi.delete(evt.id);
+				toast.success('Successfully delete');
+				setTimeout( () => {
+					router.push('/events');
+				}, 5000)
+			} catch (error) {
+				toast.error(error.message);
+			}
+		}
+	};
 	return (
 		<Layout>
 			<div className={styles.event}>
@@ -31,7 +48,10 @@ const EventPage: NextPage<EventPageProps> = ({ evt }) => {
 				<span>
 					{new Date(evt.date).toLocaleDateString('en-US')} at {evt.time}
 				</span>
+
 				<h1>{evt.name}</h1>
+				<ToastContainer />
+
 				{evt.image && (
 					<div className={styles.image}>
 						<Image

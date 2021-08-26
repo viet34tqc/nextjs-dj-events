@@ -14,6 +14,10 @@ const eventApi = {
 		const url = `/events`;
 		return axiosClient.post<Event>(url, params).then((res) => res.data);
 	},
+	delete: (id: string) => {
+		const url = `/events/${id}`;
+		return axiosClient.delete<Event>(url).then((res) => res.data);
+	},
 };
 
 export default eventApi;

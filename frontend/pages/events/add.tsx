@@ -29,7 +29,9 @@ const Add = () => {
 		try {
 			const evt = await eventApi.create(values);
 			toast.success('Successfully created');
-			router.push(`/events/${evt.slug}`);
+			setTimeout(() => {
+				router.push(`/events/${evt.slug}`);
+			}, 5000);
 		} catch (error) {
 			toast.error(error.message);
 		}
