@@ -4,8 +4,10 @@ import eventApi from 'api/eventApi';
 import moment from 'moment';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/dist/client/router';
+import Image from 'next/image';
 import { ParsedUrlQuery } from 'querystring';
 import { FormEvent, useState } from 'react';
+import { FaImage } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Event } from 'type/event';
@@ -25,6 +27,10 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt }) => {
 		description: evt.description,
 	});
 
+	const [imagePreview, setImagePreview] = useState(
+		evt?.image?.formats?.thumbnail?.url
+	);
+
 	const router = useRouter();
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -36,7 +42,7 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt }) => {
 		}
 
 		try {
-			const event = await eventApi.edit(evt.id,values);
+			const event = await eventApi.edit(evt.id, values);
 			toast.success('Successfully edit');
 			setTimeout(() => {
 				router.push(`/events/${event.slug}`);
@@ -134,6 +140,22 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt }) => {
 
 				<input type="submit" value="Update Event" className="btn" />
 			</form>
+
+			<h2>Event Image</h2>
+			{imagePreview ? (
+				<>
+					<Image src={imagePreview} height={100} width={170} alt={evt.slug} />
+					<div>
+						<button className="btn btn-secondary">
+							<FaImage /> Edit image
+						</button>
+					</div>
+				</>
+			) : (
+				<div>
+					<p>No image uploaded</p>
+				</div>
+			)}
 		</Layout>
 	);
 };
