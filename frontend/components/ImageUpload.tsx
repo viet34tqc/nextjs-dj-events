@@ -21,9 +21,9 @@ const ImageUpload = ({ evtId, imageUploaded }: ImageUploadProps) => {
 		formData.append('field', 'image');
 
 		try {
-			setDisabled(true);
-			await eventApi.upload(formData);
-			imageUploaded();
+			setDisabled(true); // Disable the submit button 
+			await eventApi.upload(formData); // Here we update the event's thumbnail
+			imageUploaded(); // Then we update the event's preview image on edit page and close the modal
 		} catch (e) {
 			toast.error(e.message);
 		}
