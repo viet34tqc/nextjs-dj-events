@@ -1,7 +1,7 @@
 import EventItem from '@/components/EventItem';
 import Layout from '@/components/Layout';
 import Pagination from '@/components/Pagination';
-import { PER_PAGE } from '@/config/';
+import { PER_PAGE } from '@/config/config';
 import eventApi from 'api/eventApi';
 import type { GetServerSideProps, NextPage } from 'next';
 import { Event, Events } from 'type/event';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { API_URL } from '../config';
+import { API_URL } from '../config/config';
 
 const axiosClient = axios.create({
 	baseURL: API_URL,
