@@ -26,6 +26,10 @@ const eventApi = {
 		const url = `/events/${id}`;
 		return axiosClient.put<Event>(url, params).then((res) => res.data);
 	},
+	upload: (formData: FormData) => {
+		const url = '/upload';
+		return axiosClient.post(url, formData).then((res) => res.data);
+	},
 };
 
 export default eventApi;

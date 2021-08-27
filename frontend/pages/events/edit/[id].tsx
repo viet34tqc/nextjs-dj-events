@@ -1,4 +1,6 @@
+import ImageUpload from '@/components/ImageUpload';
 import Layout from '@/components/Layout';
+import Modal from '@/components/Modal';
 import styles from '@/styles/EditForm.module.scss';
 import eventApi from 'api/eventApi';
 import moment from 'moment';
@@ -30,6 +32,14 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt }) => {
 	const [imagePreview, setImagePreview] = useState(
 		evt?.image?.formats?.thumbnail?.url
 	);
+
+	const imageUploaded = async () => {
+		const data = await eventApi.getById(evt.id);
+		setImagePreview(data.image.formats.thumbnail.url);
+		setShowModal(false);
+	};
+
+	const [showModal, setShowModal] = useState(false);
 
 	const router = useRouter();
 
@@ -145,17 +155,24 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt }) => {
 			{imagePreview ? (
 				<>
 					<Image src={imagePreview} height={100} width={170} alt={evt.slug} />
-					<div>
-						<button className="btn btn-secondary">
-							<FaImage /> Edit image
-						</button>
-					</div>
 				</>
 			) : (
 				<div>
 					<p>No image uploaded</p>
 				</div>
 			)}
+
+			<div>
+				<button
+					className="btn-icon btn-secondary"
+					onClick={() => setShowModal(true)}
+				>
+					<FaImage /> Edit image
+				</button>
+			</div>
+			<Modal show={showModal} onClose={() => setShowModal(false)}>
+				<ImageUpload evtId={evt.id} imageUploaded={imageUploaded} />
+			</Modal>
 		</Layout>
 	);
 };
