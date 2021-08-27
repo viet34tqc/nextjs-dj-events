@@ -10,6 +10,10 @@ const eventApi = {
 		const url = `/events/?slug=${slug}`;
 		return axiosClient.get<Events>(url).then((res) => res.data[0]);
 	},
+	getCount: () => {
+		const url = '/events/count';
+		return axiosClient.get<number>(url).then((res) => res.data);
+	},
 	getById: (id: string) => {
 		const url = `/events/${id}`;
 		return axiosClient.get<Event>(url).then((res) => res.data);

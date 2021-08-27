@@ -20,6 +20,7 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 
 - Routing features of NextJS
 - Data fetching using `getStaticProps` and `getStaticPaths`
+- Create a modal using React Portal and NextJS custom document
 
 ## Built With
 
