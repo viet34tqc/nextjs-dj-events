@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout';
+import { useAuth } from '@/context/AuthContext';
 import styles from '@/styles/AuthForm.module.scss';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
@@ -8,9 +9,11 @@ const LoginPage = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
+	const {login, error} = useAuth();
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log({email, password})
+		login({email, password})
 	};
 
 	return (

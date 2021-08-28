@@ -6,7 +6,8 @@
 			"@": ["config/*"],
 			"@/components/*": ["components/*"],
 			"@/styles/*": ["styles/*"],
-			"@/config/*": ["config/*"]
+			"@/config/*": ["config/*"],
+			"@/context/*": ["context/*"]
 		},
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,

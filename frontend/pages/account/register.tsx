@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout';
+import { useAuth } from '@/context/AuthContext';
 import styles from '@/styles/AuthForm.module.scss';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
@@ -11,12 +12,15 @@ const LoginPage = () => {
 	const [password, setPassword] = useState('');
 	const [password2, setPassword2] = useState('');
 
+	const { register, error } = useAuth();
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (password !== password2) {
 			toast.error('Password does not match');
 			return;
 		}
+		register({username, email, password})
 	};
 
 	return (
