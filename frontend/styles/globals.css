@@ -70,3 +70,13 @@ h1 {
 .btn-icon svg {
 	margin-right: 5px;
 }
+
+.btn-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn-icon svg {
+	margin-right: 5px;
+}
