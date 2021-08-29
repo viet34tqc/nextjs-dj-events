@@ -184,7 +184,7 @@ interface Params extends ParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const params = context.params as Params;
 	const evt = await eventApi.getById(params.id);
-
+	
 	return {
 		props: {
 			evt,

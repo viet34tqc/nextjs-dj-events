@@ -21,7 +21,7 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 - Routing features of NextJS
 - Data fetching using `getStaticProps` and `getStaticPaths`
 - Create a modal using React Portal and NextJS custom document
-- Strapi Authentication, see more in the Doc
+- Strapi Authentication, refer the Doc section for more details
 
 ## Built With
 
@@ -37,6 +37,7 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
   - slugify: create strapi slugify system.
     - Go to `api/events/models/events.js` and copy code from strapi docs for slugify systems
 - React Toastify
+- Cookie: we use this package to save the user's token
 
 ## Doc
 
@@ -46,4 +47,4 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
   - Create a NextJS route for login ('api/login')
   - When the user login, he connects to 'auth/local' endpoint to get the token
   - However, when we refresh the page, the credentials is gone as well.
-  - So we need to save it to the cookies.
+  - So we need to save the user's token into the cookies.

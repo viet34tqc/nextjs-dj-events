@@ -25,7 +25,8 @@ const AuthContextProvider: FC = ({ children }) => {
 	// Strapi take the username or email as identifier, so we need to rename it.
 	const login = async ({ identifier, password }: UserLogin) => {
 		try {
-			const res = await authApi.login({ identifier, password });
+			const user = await authApi.login({ identifier, password });
+			setUser(user);
 		} catch (e) {
 			const message = e.response.data.message;
 			setError(message);
