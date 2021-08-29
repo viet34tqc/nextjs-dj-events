@@ -44,7 +44,12 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 ### Authentication
 
 - Login
-  - Create a NextJS route for login ('api/login')
-  - When the user login, he connects to 'auth/local' endpoint to get the token
-  - However, when we refresh the page, the credentials is gone as well.
-  - So we need to save the user's token into the cookies.
+  - Create a NextJS api for login ('api/login')
+  - When the user login, he connects to 'auth/local' endpoint for authentication.
+  - If the credentials is true, the API returns the user and we save it into the context's user state.
+  - Then we redirect the logged-in user to the dashboard page.
+- Check if user is logged in
+  - When we refresh the page, the credentials is gone as well. So we need to save the user's token into the cookies of the header. And we use this token to check if the user is logged in. This check is implemented everytime we access to the page.
+  - We create another api for this check, named 'api/user',
+  - We retrieve the token from header and send it to 'users/me' endpoint of Strapi.
+  - If success, the API return the user object and we save it to the context's user state

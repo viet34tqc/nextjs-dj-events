@@ -1,5 +1,6 @@
 import authApi from 'api/authApi';
-import { createContext, FC, useContext, useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
+import { createContext, FC, useContext, useEffect, useState } from 'react';
 import { User, UserLogin } from 'type/user';
 
 interface IAuthContext {
@@ -16,6 +17,12 @@ const AuthContextProvider: FC = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [error, setError] = useState(null);
 
+	const router = useRouter();
+
+	useEffect(() => {
+		checkUserLoggedIn();
+	}, []);
+
 	// Register user
 	const register = (user: User) => {
 		console.log(user);
@@ -27,6 +34,7 @@ const AuthContextProvider: FC = ({ children }) => {
 		try {
 			const user = await authApi.login({ identifier, password });
 			setUser(user);
+			router.push('/account/dashboard');
 		} catch (e) {
 			const message = e.response.data.message;
 			setError(message);
@@ -43,8 +51,13 @@ const AuthContextProvider: FC = ({ children }) => {
 	};
 
 	// Check if user is logged in
-	const checkUserLoggedIn = (user: User) => {
-		console.log('Check');
+	const checkUserLoggedIn = async () => {
+		try {
+			const user = await authApi.getLoggedInUser();
+			setUser(user);
+		} catch (e) {
+			setUser(null);
+		}
 	};
 
 	return (
