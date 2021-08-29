@@ -2,11 +2,11 @@ import Layout from '@/components/Layout';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/styles/AuthForm.module.scss';
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const LoginPage = () => {
+const RegisterPage = () => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -14,13 +14,17 @@ const LoginPage = () => {
 
 	const { register, error } = useAuth();
 
+	useEffect(() => {
+		error && toast.error(error);
+	}, [error]);
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (password !== password2) {
 			toast.error('Password does not match');
 			return;
 		}
-		register({username, email, password})
+		register({ username, email, password });
 	};
 
 	return (
@@ -80,4 +84,4 @@ const LoginPage = () => {
 	);
 };
 
-export default LoginPage;
+export default RegisterPage;

@@ -24,15 +24,23 @@ const AuthContextProvider: FC = ({ children }) => {
 	}, []);
 
 	// Register user
-	const register = (user: User) => {
-		console.log(user);
+	const register = async (user: User) => {
+		try {
+			const data = await authApi.registerFE(user);
+			setUser(data.user);
+			router.push('/account/dashboard');
+		} catch (e) {
+			const message = e.response.data.message;
+			setError(message);
+			setError(null);
+		}
 	};
 
 	// Login user
 	// Strapi take the username or email as identifier, so we need to rename it.
 	const login = async ({ identifier, password }: UserLogin) => {
 		try {
-			const user = await authApi.login({ identifier, password });
+			const user = await authApi.loginFE({ identifier, password });
 			setUser(user);
 			router.push('/account/dashboard');
 		} catch (e) {
@@ -46,8 +54,16 @@ const AuthContextProvider: FC = ({ children }) => {
 	};
 
 	// Logout user
-	const logout = () => {
-		console.log('Logout');
+	const logout = async () => {
+		try {
+			await authApi.logout();
+			setUser(null);
+			router.push('/')
+		} catch (e) {
+			const message = e.response.data.message;
+			setError(message);
+			setError(null);
+		}
 	};
 
 	// Check if user is logged in

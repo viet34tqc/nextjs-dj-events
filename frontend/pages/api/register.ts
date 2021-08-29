@@ -8,10 +8,11 @@ export default async function handler(
 ) {
 	if (req.method === 'POST') {
 		// Get the credentials from the request
-		const { identifier, password } = req.body;
+		const { username, email, password } = req.body;
 
+		// Get the token first
 		try {
-			const data = await authApi.loginBE({ identifier, password });
+			const data = await authApi.registerBE({ username, email, password });
 
 			res.setHeader(
 				'Set-Cookie',
@@ -23,7 +24,7 @@ export default async function handler(
 					path: '/',
 				})
 			);
-			res.status(200).json( data.user );
+			res.status(200).json(data.user);
 		} catch (error) {
 			res
 				.status(error.response.status)
