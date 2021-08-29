@@ -2,18 +2,23 @@ import Layout from '@/components/Layout';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/styles/AuthForm.module.scss';
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const LoginPage = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const {login, error} = useAuth();
+	const { login, error } = useAuth();
+
+	useEffect(() => {
+		error && toast.error(error);
+	}, [error]);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		login({email, password})
+		login({ identifier: email, password });
 	};
 
 	return (
@@ -47,7 +52,8 @@ const LoginPage = () => {
 				</form>
 
 				<p>
-					Don&apos;t have an account? <Link href="/account/register">Register</Link>
+					Don&apos;t have an account?{' '}
+					<Link href="/account/register">Register</Link>
 				</p>
 			</div>
 		</Layout>

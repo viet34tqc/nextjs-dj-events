@@ -1,38 +1,38 @@
 import { Event, Events } from 'type/event';
-import axiosClient from './axiosClient';
+import {axiosBEClient} from './axiosClient';
 
 const eventApi = {
 	getAll: (params?: {}, queryString = '') => {
 		const url = `/events?${queryString}`;
-		return axiosClient.get<Events>(url, { params }).then((res) => res.data);
+		return axiosBEClient.get<Events>(url, { params }).then((res) => res.data);
 	},
 	get: (slug: string) => {
 		const url = `/events/?slug=${slug}`;
-		return axiosClient.get<Events>(url).then((res) => res.data[0]);
+		return axiosBEClient.get<Events>(url).then((res) => res.data[0]);
 	},
 	getCount: () => {
 		const url = '/events/count';
-		return axiosClient.get<number>(url).then((res) => res.data);
+		return axiosBEClient.get<number>(url).then((res) => res.data);
 	},
 	getById: (id: string) => {
 		const url = `/events/${id}`;
-		return axiosClient.get<Event>(url).then((res) => res.data);
+		return axiosBEClient.get<Event>(url).then((res) => res.data);
 	},
 	create: (params: {}) => {
 		const url = `/events`;
-		return axiosClient.post<Event>(url, params).then((res) => res.data);
+		return axiosBEClient.post<Event>(url, params).then((res) => res.data);
 	},
 	delete: (id: string) => {
 		const url = `/events/${id}`;
-		return axiosClient.delete<Event>(url).then((res) => res.data);
+		return axiosBEClient.delete<Event>(url).then((res) => res.data);
 	},
 	edit: (id: string, params: {}) => {
 		const url = `/events/${id}`;
-		return axiosClient.put<Event>(url, params).then((res) => res.data);
+		return axiosBEClient.put<Event>(url, params).then((res) => res.data);
 	},
 	upload: (formData: FormData) => {
 		const url = '/upload';
-		return axiosClient.post(url, formData).then((res) => res.data);
+		return axiosBEClient.post(url, formData).then((res) => res.data);
 	},
 };
 

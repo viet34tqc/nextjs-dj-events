@@ -6,7 +6,7 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 
 ## Features
 
-- Authentication using JWT
+- Authentication using JWT HttpOnly Cookies
   - Login/Logout
   - User registration
 - Events
@@ -14,13 +14,14 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
   - Search page
   - Single event page
   - Create/Delete/Edit events (user only)
-- Upload image to Cloudinary
+- Synchronize Strapi's media upload with Cloudinary
 
 ## What you will learn
 
 - Routing features of NextJS
 - Data fetching using `getStaticProps` and `getStaticPaths`
 - Create a modal using React Portal and NextJS custom document
+- Strapi Authentication, see more in the Doc
 
 ## Built With
 
@@ -36,3 +37,13 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
   - slugify: create strapi slugify system.
     - Go to `api/events/models/events.js` and copy code from strapi docs for slugify systems
 - React Toastify
+
+## Doc
+
+### Authentication
+
+- Login
+  - Create a NextJS route for login ('api/login')
+  - When the user login, he connects to 'auth/local' endpoint to get the token
+  - However, when we refresh the page, the credentials is gone as well.
+  - So we need to save it to the cookies.
