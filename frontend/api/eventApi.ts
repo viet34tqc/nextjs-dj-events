@@ -1,5 +1,5 @@
 import { Event, Events } from 'type/event';
-import {axiosBEClient} from './axiosClient';
+import { axiosBEClient } from './axiosClient';
 
 const eventApi = {
 	getAll: (params?: {}, queryString = '') => {
@@ -9,6 +9,14 @@ const eventApi = {
 	get: (slug: string) => {
 		const url = `/events/?slug=${slug}`;
 		return axiosBEClient.get<Events>(url).then((res) => res.data[0]);
+	},
+	getByUser: (token: string) => {
+		const url = `/events/me`;
+		return axiosBEClient.get<Events>(url, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		}).then(res => res.data);
 	},
 	getCount: () => {
 		const url = '/events/count';

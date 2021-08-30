@@ -86,5 +86,5 @@ const AuthContextProvider: FC = ({ children }) => {
 export default AuthContextProvider;
 
 export const useAuth = () => {
-	return useContext(AuthContext) as IAuthContext;
+	return useContext(AuthContext) as IAuthContext; // Cast type to IAuthContext so we can destructure context object when use this function
 };

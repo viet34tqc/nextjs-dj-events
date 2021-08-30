@@ -13,6 +13,7 @@ export default async function handler(
 		try {
 			const data = await authApi.loginBE({ identifier, password });
 
+			// Save the token to the cookie for checking if the user is logged in already.
 			res.setHeader(
 				'Set-Cookie',
 				cookie.serialize('token', data.jwt, {
