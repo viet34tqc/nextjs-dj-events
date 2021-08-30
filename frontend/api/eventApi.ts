@@ -12,11 +12,13 @@ const eventApi = {
 	},
 	getByUser: (token: string) => {
 		const url = `/events/me`;
-		return axiosBEClient.get<Events>(url, {
-			headers: {
-				Authorization: `Bearer ${token}`
-			}
-		}).then(res => res.data);
+		return axiosBEClient
+			.get<Events>(url, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => res.data);
 	},
 	getCount: () => {
 		const url = '/events/count';
@@ -26,21 +28,45 @@ const eventApi = {
 		const url = `/events/${id}`;
 		return axiosBEClient.get<Event>(url).then((res) => res.data);
 	},
-	create: (params: {}) => {
+	create: (params: {}, token: string) => {
 		const url = `/events`;
-		return axiosBEClient.post<Event>(url, params).then((res) => res.data);
+		return axiosBEClient
+			.post<Event>(url, params, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => res.data);
 	},
-	delete: (id: string) => {
+	delete: (id: string, token) => {
 		const url = `/events/${id}`;
-		return axiosBEClient.delete<Event>(url).then((res) => res.data);
+		return axiosBEClient
+			.delete<Event>(url, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => res.data);
 	},
-	edit: (id: string, params: {}) => {
+	edit: (id: string, params: {}, token: string) => {
 		const url = `/events/${id}`;
-		return axiosBEClient.put<Event>(url, params).then((res) => res.data);
+		return axiosBEClient
+			.put<Event>(url, params, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => res.data);
 	},
-	upload: (formData: FormData) => {
+	upload: (params: {}, token: string) => {
 		const url = '/upload';
-		return axiosBEClient.post(url, formData).then((res) => res.data);
+		return axiosBEClient
+			.post(url, params, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => res.data);
 	},
 };
 

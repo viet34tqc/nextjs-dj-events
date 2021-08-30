@@ -1,11 +1,18 @@
 import Layout from '@/components/Layout';
+import { parseCookie } from '@/helper/helper';
 import styles from '@/styles/EditForm.module.scss';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import { FormEvent, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import eventApi from '../../api/eventApi';
-const Add = () => {
+
+interface AddPageProps {
+	token: string;
+}
+
+const AddPage: NextPage<AddPageProps> = ({token}) => {
 	const [values, setValues] = useState({
 		name: '',
 		performers: '',
@@ -27,13 +34,20 @@ const Add = () => {
 		}
 
 		try {
-			const evt = await eventApi.create(values);
+			const evt = await eventApi.create(values, token);
 			toast.success('Successfully created');
 			setTimeout(() => {
 				router.push(`/events/${evt.slug}`);
-			}, 5000);
+			}, 2000);
 		} catch (error) {
-			toast.error(error.message);
+			if (
+				error?.response?.status === 401 ||
+				error?.response?.status === 403
+			) {
+				toast.error('No token');
+			} else {
+				toast.error(error.message);
+			}
 		}
 	};
 
@@ -129,4 +143,15 @@ const Add = () => {
 	);
 };
 
-export default Add;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const { token } = parseCookie(context.req);
+
+	return {
+		props: {
+			token,
+		},
+	};
+};
+
+export default AddPage;

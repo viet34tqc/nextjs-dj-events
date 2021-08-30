@@ -1,6 +1,7 @@
 import ImageUpload from '@/components/ImageUpload';
 import Layout from '@/components/Layout';
 import Modal from '@/components/Modal';
+import { parseCookie } from '@/helper/helper';
 import styles from '@/styles/EditForm.module.scss';
 import eventApi from 'api/eventApi';
 import moment from 'moment';
@@ -16,9 +17,10 @@ import { Event } from 'type/event';
 
 interface EditEventPageProps {
 	evt: Event;
+	token: string;
 }
 
-const EditEventPage: NextPage<EditEventPageProps> = ({ evt }) => {
+const EditEventPage: NextPage<EditEventPageProps> = ({ evt, token }) => {
 	const [values, setValues] = useState({
 		name: evt.name,
 		performers: evt.performers,
@@ -52,13 +54,20 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt }) => {
 		}
 
 		try {
-			const event = await eventApi.edit(evt.id, values);
+			const event = await eventApi.edit(evt.id, values, token);
 			toast.success('Successfully edit');
 			setTimeout(() => {
 				router.push(`/events/${event.slug}`);
 			}, 5000);
 		} catch (error) {
-			toast.error(error.message);
+			if (
+				error?.response?.status === 401 ||
+				error?.response?.status === 403
+			) {
+				toast.error('No token');
+			} else {
+				toast.error(error.message);
+			}
 		}
 	};
 
@@ -171,7 +180,7 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt }) => {
 				</button>
 			</div>
 			<Modal show={showModal} onClose={() => setShowModal(false)}>
-				<ImageUpload evtId={evt.id} imageUploaded={imageUploaded} />
+				<ImageUpload evtId={evt.id} imageUploaded={imageUploaded} token={token} />
 			</Modal>
 		</Layout>
 	);
@@ -182,12 +191,14 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+	const {token} = parseCookie(context.req);
 	const params = context.params as Params;
 	const evt = await eventApi.getById(params.id);
-	
+
 	return {
 		props: {
 			evt,
+			token
 		},
 	};
 };

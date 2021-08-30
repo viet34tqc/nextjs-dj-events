@@ -6,9 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 interface ImageUploadProps {
 	evtId: string;
 	imageUploaded: () => void;
+	token: string;
 }
 
-const ImageUpload = ({ evtId, imageUploaded }: ImageUploadProps) => {
+const ImageUpload = ({ evtId, imageUploaded, token }: ImageUploadProps) => {
 	const [image, setImage] = useState<Blob | string>('');
 	const [disable, setDisabled] = useState(false);
 
@@ -21,9 +22,10 @@ const ImageUpload = ({ evtId, imageUploaded }: ImageUploadProps) => {
 		formData.append('field', 'image');
 
 		try {
-			setDisabled(true); // Disable the submit button 
-			await eventApi.upload(formData); // Here we update the event's thumbnail
+			setDisabled(true); // Disable the submit button
+			await eventApi.upload(formData, token); // Here we update the event's thumbnail
 			imageUploaded(); // Then we update the event's preview image on edit page and close the modal
+			toast.success('Successfully updated');
 		} catch (e) {
 			toast.error(e.message);
 		}

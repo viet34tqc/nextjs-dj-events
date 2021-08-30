@@ -55,3 +55,7 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
   - We create another api for this check, named 'api/user',
   - We retrieve the token from header and send it to 'users/me' endpoint of Strapi.
   - If success, the API return the user object and we save it to the context's user state
+- Logout
+  - Delete token
+  - setUser(null)
+  - Redirect to homepage
