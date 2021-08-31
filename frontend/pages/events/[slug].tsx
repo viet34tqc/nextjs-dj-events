@@ -60,6 +60,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		props: {
 			evt,
 		},
+		revalidate: 5
 	};
 };
 
@@ -71,7 +72,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	}));
 	return {
 		paths,
-		fallback: false, // If the slug isn't found, return 404.
+		fallback: 'blocking', // will server-render pages on-demand if the path doesn't exist.
 	};
 };
 
