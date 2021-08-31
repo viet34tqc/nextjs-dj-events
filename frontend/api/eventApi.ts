@@ -38,7 +38,7 @@ const eventApi = {
 			})
 			.then((res) => res.data);
 	},
-	delete: (id: string, token) => {
+	delete: (id: string, token: string) => {
 		const url = `/events/${id}`;
 		return axiosBEClient
 			.delete<Event>(url, {
