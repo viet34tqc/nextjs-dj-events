@@ -11,7 +11,6 @@ const axiosBEClient = axios.create({
 });
 
 axiosBEClient.interceptors.request.use(async (config) => {
-	console.log('config', config)
 	return config;
 });
 
