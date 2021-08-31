@@ -4,6 +4,8 @@ Forked from <https://github.com/bradtraversy/dj-events-frontend> of Brad Travers
 
 This is an event website built with NextJS for frontend and use Strapi as the backend. In this project, I put a lot of comments in the code so that you can easily follow along.
 
+Link demo: <https://nextjs-dj-events.vercel.app/>. Feel free to play with it and let me know if there is any bug.
+
 ## Features
 
 - Authentication using JWT HttpOnly Cookies
@@ -19,9 +21,10 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 ## What you will learn
 
 - Routing features of NextJS
+- Data fetching in NextJS
 - Data fetching using `getStaticProps` and `getStaticPaths`
 - Create a modal using React Portal and NextJS custom document
-- Strapi Authentication, refer the Doc section for more details
+- Strapi Authentication, refer the [Doc section](#doc) for more details
 
 ## Built With
 
