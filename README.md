@@ -6,23 +6,37 @@ This is an event website built with NextJS for frontend and use Strapi as the ba
 
 Link demo: <https://nextjs-dj-events.vercel.app/>. Feel free to play with it and let me know if there is any bug.
 
+## Pages
+
+- Homepage: Display 3 latest events
+- Events
+  - Display all events
+  - Has pagination
+- Single Event
+- Login
+- Registration
+- Dashboard
+  - Display event of the logged in user
+  - Delete/Edit that event
+- Add event
+- Edit event
+
 ## Features
 
 - Authentication using JWT HttpOnly Cookies
-  - Login/Logout
-  - User registration
+  - Login: then redirect to dashboard
+  - Logout: then redirect to homepage
+  - User registration: if successfull, redirect to the dashboard
 - Events
   - Pagagination on events page
-  - Search page
-  - Single event page
+  - Search page: Search from the search form in the header
   - Create/Delete/Edit events (user only)
 - Synchronize Strapi's media upload with Cloudinary
 
 ## What you will learn
 
 - Routing features of NextJS
-- Data fetching in NextJS
-- Data fetching using `getStaticProps` and `getStaticPaths`
+- Data fetching in NextJS using `getStaticProps` and `getStaticPaths`
 - Create a modal using React Portal and NextJS custom document
 - Strapi Authentication, refer the [Doc section](#doc) for more details
 

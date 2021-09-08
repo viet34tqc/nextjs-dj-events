@@ -60,10 +60,7 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt, token }) => {
 				router.push(`/events/${event.slug}`);
 			}, 5000);
 		} catch (error) {
-			if (
-				error?.response?.status === 401 ||
-				error?.response?.status === 403
-			) {
+			if (error?.response?.status === 401 || error?.response?.status === 403) {
 				toast.error('No token');
 			} else {
 				toast.error(error.message);
@@ -180,7 +177,11 @@ const EditEventPage: NextPage<EditEventPageProps> = ({ evt, token }) => {
 				</button>
 			</div>
 			<Modal show={showModal} onClose={() => setShowModal(false)}>
-				<ImageUpload evtId={evt.id} imageUploaded={imageUploaded} token={token} />
+				<ImageUpload
+					evtId={evt.id}
+					imageUploaded={imageUploaded}
+					token={token}
+				/>
 			</Modal>
 		</Layout>
 	);
@@ -191,14 +192,14 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const {token} = parseCookie(context.req);
+	const { token } = parseCookie(context.req);
 	const params = context.params as Params;
 	const evt = await eventApi.getById(params.id);
 
 	return {
 		props: {
 			evt,
-			token
+			token,
 		},
 	};
 };
