@@ -1,4 +1,4 @@
-.editForm {
+.addEditForm {
 	label {
 		display: block;
 	}
@@ -13,17 +13,25 @@
 		height: 150px;
 	}
 
+	button[type='submit'] {
+		display: block;
+		width: 100%;
+		margin: 20px 0 30px;
+	}
+}
+
+.uploadImage {
 	input[type='submit'] {
 		display: block;
 		width: 100%;
 		margin: 20px 0 30px;
 	}
+}
 
-	.file {
-		border: 1px #ccc solid;
-		background-color: #f4f4f4;
-		padding: 10px;
-	}
+.file {
+	border: 1px #ccc solid;
+	background-color: #f4f4f4;
+	padding: 10px;
 }
 
 .grid {
@@ -33,8 +41,6 @@
 	margin-bottom: 20px;
 
 	@media (max-width: 600px) {
-		.grid {
-			grid-template-columns: 1fr;
-		}
+		grid-template-columns: 1fr;
 	}
 }

@@ -1,4 +1,4 @@
-import styles from '@/styles/EditForm.module.scss';
+import styles from '@/styles/AddEditEventForm.module.scss';
 import eventApi from 'api/eventApi';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
@@ -36,9 +36,9 @@ const ImageUpload = ({ evtId, imageUploaded, token }: ImageUploadProps) => {
 	};
 
 	return (
-		<div className={styles.editForm}>
+		<div className={styles.uploadImage}>
 			<h1>Upload Event Image</h1>
-			<ToastContainer />
+			<ToastContainer autoClose={3000} />
 			<form onSubmit={handleSubmit}>
 				<div className={styles.file}>
 					<input type="file" onChange={handleFileChange} />

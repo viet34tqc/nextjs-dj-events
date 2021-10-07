@@ -17,7 +17,6 @@ interface LoginFormInput {
 }
 
 const LoginPage = () => {
-	const [error, setError] = useState('');
 	const schema = yup.object({
 		email: yup.string().email().required(),
 		password: yup.string().required(),
