@@ -1,30 +1,55 @@
+import InputField from '@/components/FormFields/InputField';
 import Layout from '@/components/Layout';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/styles/AuthForm.module.scss';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { FormEvent, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { FaUser } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as yup from 'yup';
+
+interface RegisterFormInputs {
+	username: string;
+	email: string;
+	password: string;
+	password2: string;
+}
+
 const RegisterPage = () => {
-	const [username, setUsername] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [password2, setPassword2] = useState('');
+	const schema = yup.object({
+		username: yup.string().required(),
+		email: yup.string().email().required(),
+		password: yup.string().required(),
+		password2: yup.string().required(),
+	});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors: formErrors },
+	} = useForm<RegisterFormInputs>({
+		resolver: yupResolver(schema),
+	});
 
-	const { register, error } = useAuth();
+	const { register: registerUser } = useAuth();
 
-	useEffect(() => {
-		error && toast.error(error);
-	}, [error]);
-
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleFormSubmit = async ({
+		username,
+		email,
+		password,
+		password2,
+	}: RegisterFormInputs) => {
 		if (password !== password2) {
 			toast.error('Password does not match');
 			return;
 		}
-		register({ username, email, password });
+		try {
+			await registerUser({ username, email, password });
+		} catch (e) {
+			const message = e.response.data.message;
+			message && toast.error(message);
+		}
 	};
 
 	return (
@@ -34,43 +59,35 @@ const RegisterPage = () => {
 					<FaUser /> Register
 				</h1>
 				<ToastContainer />
-				<form onSubmit={handleSubmit}>
-					<div>
-						<label htmlFor="username">Username</label>
-						<input
-							type="text"
-							id="username"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-					</div>
-					<div>
-						<label htmlFor="email">Email Address</label>
-						<input
-							type="email"
-							id="email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-					</div>
-					<div>
-						<label htmlFor="password">Password</label>
-						<input
-							type="password"
-							id="password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-					</div>
-					<div>
-						<label htmlFor="password2">Confirm Password</label>
-						<input
-							type="password"
-							id="password2"
-							value={password2}
-							onChange={(e) => setPassword2(e.target.value)}
-						/>
-					</div>
+				<form onSubmit={handleSubmit(handleFormSubmit)}>
+					<InputField
+						name="username"
+						label="Username"
+						type="text"
+						register={register}
+						formErrors={formErrors}
+					/>
+					<InputField
+						name="email"
+						label="Email Address"
+						type="email"
+						register={register}
+						formErrors={formErrors}
+					/>
+					<InputField
+						name="password"
+						label="Password"
+						type="password"
+						register={register}
+						formErrors={formErrors}
+					/>
+					<InputField
+						name="password2"
+						label="Confirm Password"
+						type="password"
+						register={register}
+						formErrors={formErrors}
+					/>
 
 					<input type="submit" value="Register" className="btn" />
 				</form>

@@ -25,32 +25,17 @@ const AuthContextProvider: FC = ({ children }) => {
 
 	// Register user
 	const register = async (user: User) => {
-		try {
-			const data = await authApi.registerFE(user);
-			setUser(data.user);
-			router.push('/account/dashboard');
-		} catch (e) {
-			const message = e.response.data.message;
-			setError(message);
-			setError(null);
-		}
+		const data = await authApi.registerFE(user);
+		setUser(data);
+		router.push('/account/dashboard');
 	};
 
 	// Login user
 	// Strapi take the username or email as identifier, so we need to rename it.
 	const login = async ({ identifier, password }: UserLogin) => {
-		try {
-			const user = await authApi.loginFE({ identifier, password });
-			setUser(user);
-			router.push('/account/dashboard');
-		} catch (e) {
-			const message = e.response.data.message;
-			setError(message);
-			// If the message from the request is the same, like submiting without any credentials two times.
-			// Then the login page cannot re-render and the toast won't work.
-			// Reset the error here to refresh the state of the context so that other child components can re-render
-			setError(null);
-		}
+		const user = await authApi.loginFE({ identifier, password });
+		setUser(user);
+		router.push('/account/dashboard');
 	};
 
 	// Logout user
@@ -58,7 +43,7 @@ const AuthContextProvider: FC = ({ children }) => {
 		try {
 			await authApi.logout();
 			setUser(null);
-			router.push('/')
+			router.push('/');
 		} catch (e) {
 			const message = e.response.data.message;
 			setError(message);

@@ -1,24 +1,44 @@
+import InputField from '@/components/FormFields/InputField';
 import Layout from '@/components/Layout';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/styles/AuthForm.module.scss';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { FormEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { FaUser } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as yup from 'yup';
+
+interface LoginFormInput {
+	email: string;
+	password: string;
+}
+
 const LoginPage = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [error, setError] = useState('');
+	const schema = yup.object({
+		email: yup.string().email().required(),
+		password: yup.string().required(),
+	});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors: formErrors },
+	} = useForm<LoginFormInput>({
+		resolver: yupResolver(schema),
+	});
 
-	const { login, error } = useAuth();
+	const { login } = useAuth();
 
-	useEffect(() => {
-		error && toast.error(error);
-	}, [error]);
-
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		login({ identifier: email, password });
+	const handleFormSubmit = async ({ email, password }: LoginFormInput) => {
+		try {
+			await login({ identifier: email, password });
+		} catch (e) {
+			const message = e.response.data.message;
+			message && toast.error(message);
+		}
 	};
 
 	return (
@@ -28,25 +48,21 @@ const LoginPage = () => {
 					<FaUser /> Log In
 				</h1>
 				<ToastContainer />
-				<form onSubmit={handleSubmit}>
-					<div>
-						<label htmlFor="email">Email Address</label>
-						<input
-							type="email"
-							id="email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-					</div>
-					<div>
-						<label htmlFor="password">Password</label>
-						<input
-							type="password"
-							id="password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-					</div>
+				<form onSubmit={handleSubmit(handleFormSubmit)}>
+					<InputField
+						name="email"
+						label="Email Address"
+						register={register}
+						type="email"
+						formErrors={formErrors}
+					/>
+					<InputField
+						name="password"
+						label="Password"
+						register={register}
+						type="password"
+						formErrors={formErrors}
+					/>
 
 					<input type="submit" value="Login" className="btn" />
 				</form>

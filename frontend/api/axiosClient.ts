@@ -10,9 +10,14 @@ const axiosBEClient = axios.create({
 	paramsSerializer: (params) => qs.stringify(params),
 });
 
-axiosBEClient.interceptors.request.use(async (config) => {
-	return config;
-});
+axiosBEClient.interceptors.request.use(
+	(config) => {
+		return config;
+	},
+	(error) => {
+		throw error;
+	}
+);
 
 axiosBEClient.interceptors.response.use(
 	(response) => {
@@ -31,9 +36,14 @@ const axiosFEClient = axios.create({
 	paramsSerializer: (params) => qs.stringify(params),
 });
 
-axiosFEClient.interceptors.request.use(async (config) => {
-	return config;
-});
+axiosFEClient.interceptors.request.use(
+	(config) => {
+		return config;
+	},
+	(error) => {
+		throw error;
+	}
+);
 
 axiosFEClient.interceptors.response.use(
 	(response) => {
