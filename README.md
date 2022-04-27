@@ -63,14 +63,16 @@ Link demo: <https://nextjs-dj-events.vercel.app/>. Feel free to play with it and
 - Login
   - Create a NextJS api for login ('api/login')
   - When the user login, he connects to 'auth/local' endpoint for authentication.
-  - If the credentials is true, the API returns the user data and we save it into the context's user state.
+  - If the credentials is true:
+    - the API returns the user data and we save it into the context's user state.
+    - a token is created and saved to cookie. We doing this by using the api of NextJS.
   - Then we redirect the logged-in user to the dashboard page.
 - Register
   - It is the same as login. We replace 'auth/local' by 'auth/local/register'
 - Check if user is logged in
   - When we refresh the page, the credentials is gone as well. So we need to save the user's token into the cookies of the header. And we use this token to check if the user is logged in. This check is implemented everytime we access to the page.
-  - We create another api for this check, named 'api/user',
-  - We retrieve the token from header and send it to 'users/me' endpoint of Strapi.
+  - We create another NextJS API for this check, named 'api/user',
+  - The token is already set when we login. Then, we send that token to 'users/me' endpoint of Strapi.
   - If success, the API return the user object and we save it to the context's user state
 - Logout
   - Delete token
